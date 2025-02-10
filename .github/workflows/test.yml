@@ -18,3 +18,19 @@ jobs:
         run: npm ci #install all dependencies but uses version described in package-lock.json
       - name: Run Tests
         run: npm run test
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/chechout@v4
+      - name: Install NodeJS
+        uses: actions/stepup-node@v4
+        with:
+          node-version: 18
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build Project
+        run: npm run build
+      - name: Deploy
+        run: echo "Deployed ___"
