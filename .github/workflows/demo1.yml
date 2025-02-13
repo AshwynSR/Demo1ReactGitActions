@@ -9,6 +9,11 @@ on:
       - 'dev-*' #dev-new dev-this-is-new
       - 'feature/**' # feature/new feature/new/button
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment Environment'
+        required: true
+        default: 'staging'
   push:
     branches:
       - main
@@ -22,6 +27,8 @@ jobs:
     steps:
       - name: Output event data
         run: echo "${{ toJSON(github.event) }}"
+      - name: Deploy to ${{ github.event.inputs.environment }}
+        run: echo "Deployed to ${{ github.event.inputs.environment }}... "
       - name: Get code
         uses: actions/checkout@v3
       - name: Install dependencies
